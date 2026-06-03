@@ -36,6 +36,14 @@ bleak>=0.21.0              # BLE UART console (NUS) and GATT client
 # platformio>=6.1.0        # uncomment if you want pip to manage it
 
 # -----------------------------------------------------------------------------
+# Brain (Stateful Hedgehog — agent memory layer)
+# Install separately: pip install -e ~/memory-sync --break-system-packages
+# Requires: ollama pull nomic-embed-text + ANTHROPIC_API_KEY set
+# -----------------------------------------------------------------------------
+
+# memory-sync is editable-installed from ~/memory-sync, not listed as a pip dep
+
+# -----------------------------------------------------------------------------
 # Testing (optional — for running crucible infrastructure unit tests)
 # -----------------------------------------------------------------------------
 

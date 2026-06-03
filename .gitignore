@@ -1,0 +1,17 @@
+# Brain memory (local per machine — never commit)
+.brain/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# PlatformIO
+.pio/
+
+# Editor
+.DS_Store

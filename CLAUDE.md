@@ -218,6 +218,34 @@ have no basis for their findings.
 
 ---
 
+## Cross-session memory (brain tools)
+
+This project has access to `mcp__brain__*` tools via the Stateful Hedgehog brain MCP server.
+Use them to carry context across sessions — the constitutional record lives in git, but
+project state, open threads, and decisions-in-progress live in the brain.
+
+At session start, call:
+```
+brain_project_context(cwd=<this repo path>)   → what was left open last session
+brain_mem("crucible project decisions", agent_id="project:crucible-lite")
+```
+
+Before ending a session with an important decision or open thread:
+```
+brain_remember("<decision or fact>", agent_id="project:crucible-lite")
+```
+
+Scope discipline:
+- `agent_id="project:crucible-lite"` — project-specific decisions, stage state, open debates
+- `agent_id="global"` — user preferences, feedback rules that apply across all projects
+
+The `.brain/` directory is gitignored — it is local to this machine and never committed.
+Brain memory is not a substitute for the constitutional record. Amendments, Bills, and
+Judicial rulings live in `docs/governance/`. Brain stores ephemeral state that would
+otherwise be lost between sessions.
+
+---
+
 ## The one thing you must not do
 
 Do not set a threshold, cutoff, or parameter in firmware source without citing a
