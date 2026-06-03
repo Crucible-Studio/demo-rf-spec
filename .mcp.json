@@ -3,6 +3,12 @@
     "xiao-nrf52840-sense": {
       "command": "python3",
       "args": [".claude/mcp/xiao_nrf52840_sense/server.py"]
+    },
+    "brain": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["-m", "brain.mcp_server"],
+      "cwd": "~/memory-sync"
     }
   }
 }
