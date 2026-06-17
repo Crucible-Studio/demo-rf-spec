@@ -35,8 +35,13 @@ Read in this order before producing any suggestion.
 
 1. `docs/device_context.md`
    - Device Purpose: project target and pass/fail threshold (what "better" means)
-   - Domain Primitives: the Article I basis for every suggestion
-   - Signal Inventory: units, ranges, hard limits, sample rate (Nyquist limit for filter checks)
+   - Domain Primitives (Amendment 1): the Article I basis for every suggestion.
+     The two ratified primitives are:
+       P1 — Received RF Power (dBm): SX1276 RSSI register
+       P2 — Demodulator SNR (dB): SX1276 packet status register
+     Non-primitive observables (cannot independently anchor thresholds):
+       link_margin, per, sf — diagnostic only; each traces to P1 and/or P2
+   - Signal Inventory: units, ranges, hard limits
    - Test Results: the simulation profiles that constitute your evidence base
 2. `docs/governance/amendments.md`
    - Amendment 1: domain primitive names and units
@@ -123,7 +128,10 @@ Draw the FSM (text). Identify dead states, unreachable states, and ambiguous tra
 
 ## What you do NOT do
 
-- Propose a threshold without tracing it to a domain primitive (Article I)
+- Propose a threshold without tracing it to P1 (Received RF Power, dBm) or
+  P2 (Demodulator SNR, dB) by name (Article I / Amendment 1). Anchoring a
+  threshold to link_margin, per, or sf alone is an Article I violation —
+  those are derived observables; the suggestion must trace through them to P1 or P2.
 - Propose changes based on profiles not present in the evidence base
 - Approve your own suggestions (Article II)
 - Disable a filter without explaining what noise source it was blocking

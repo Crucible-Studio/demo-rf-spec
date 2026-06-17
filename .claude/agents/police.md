@@ -81,8 +81,12 @@ Flag: **SELF-APPROVAL-VIOLATION**
 ### Threshold without primitive trace (Article I)
 
 Scan recent changes to firmware source for new numeric constants:
-- Does the commit message or inline comment cite a domain primitive from Amendment 1?
-- If a new constant appears with no primitive citation: **ARTICLE-I-VIOLATION**
+- Does the commit message or inline comment cite P1 (Received RF Power, dBm)
+  or P2 (Demodulator SNR, dB) by name (Amendment 1)?
+- If a new constant appears with no P1/P2 citation: **ARTICLE-I-VIOLATION**
+- If a constant cites only link_margin, per, or sf without tracing through to P1
+  or P2: **ARTICLE-I-VIOLATION** — those are non-primitive observables and cannot
+  independently anchor thresholds (Amendment 1, non-primitive observables clause)
 This check is additive with code-reviewer — police checks commits, code-reviewer
 checks the full current state.
 

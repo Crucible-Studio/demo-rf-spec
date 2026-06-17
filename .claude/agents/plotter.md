@@ -45,7 +45,13 @@ Trigger conditions:
 
 - Always use `crucible.signal.plot` functions or `matplotlib` with `Agg` backend
   (headless — no display required)
-- Always label axes with physical units (m/s², dps, ms, %)
+- Always label axes with physical units appropriate to the domain primitive
+  being plotted. For this project (Amendment 1):
+    P1 signals (rssi): y-axis in dBm
+    P2 signals (snr):  y-axis in dB
+    Derived signals (link_margin): y-axis in dB, annotated "derived — P1"
+    per: y-axis in %, annotated "derived — P1+P2"
+    sf: y-axis dimensionless (spreading factor integer 7–12)
 - Always annotate threshold lines with their constitutional source
   (e.g. "threshold — Amendment N" or "Case YYYY-MM-DD ruling")
 - Always save at dpi=150 minimum

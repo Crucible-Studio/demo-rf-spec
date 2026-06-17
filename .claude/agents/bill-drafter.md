@@ -69,8 +69,15 @@ If no Amendment governs, flag: "No amendment governs this change — ratify one 
 or this Bill will be blocked at debate."
 
 **Measurable outcome gate**
-The Expected Outcome must state a change in a domain primitive (from Amendment 1),
+The Expected Outcome must state a change in a domain primitive (Amendment 1),
 in the unit of that primitive. "Improved performance" is not accepted.
+The only two primitives that can anchor a Bill's Expected Outcome are:
+  P1 — Received RF Power (dBm)
+  P2 — Demodulator SNR (dB)
+A Bill whose Expected Outcome is stated solely in terms of link_margin (dB),
+per (%), or sf is INCOMPLETE — those are non-primitive observables. The Bill
+must trace the expected change through to P1 or P2. Add a sentence of the form:
+"This improves P1 from X dBm to Y dBm" or "This raises P2 floor by N dB."
 
 **Scope gate**
 The Proposed Change must name specific files, functions, or parameter values.
@@ -109,7 +116,10 @@ Each item cited must exist in device_context.md or have been generated this sess
 
 Expected outcome:
 [What measurable improvement does this produce?
-Stated as: [primitive name] ([unit]): [before] → [after (estimated)].]
+Stated as: P1 — Received RF Power (dBm): [before] → [after (estimated)]
+           or P2 — Demodulator SNR (dB): [before] → [after (estimated)]
+Link_margin, per, and sf may appear as supporting evidence but cannot be the
+sole statement of outcome — the change in P1 or P2 must be explicit.]
 
 Branch:
 [Suggested git branch name for implementation if enacted]

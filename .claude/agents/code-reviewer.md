@@ -61,13 +61,25 @@ For every numeric constant, threshold, or parameter in the source:
 - Is the unit stated?
 - Is the value physically plausible given the Signal Inventory range?
 
+The two ratified primitives for this project (Amendment 1) are:
+  P1 — Received RF Power (dBm): SX1276 RSSI register, directly measurable
+  P2 — Demodulator SNR (dB): SX1276 packet status register, directly reported
+
+Non-primitive observables — diagnostic use only, cannot anchor thresholds independently:
+  link_margin (derived: RSSI − receiver_sensitivity(SF), traces to P1)
+  per         (derived: rolling PER over 10-uplink window, traces to P1 + P2)
+  sf          (protocol parameter, modifies P2 effective floor — not physically measurable)
+
 Flag as **ARTICLE-I-VIOLATION** if:
-- A constant has no comment tracing it to a domain primitive
+- A constant has no comment tracing it to P1 or P2 by name
 - A constant's unit is ambiguous or unstated
-- A constant value falls outside the plausible range for its domain primitive
+- A constant value falls outside the plausible range for its primitive
+  (P1 plausible range: −40 to −130 dBm; P2 plausible range: +20 to −20 dB)
+- A threshold is anchored to link_margin, per, or sf alone without tracing
+  through to P1 or P2 (non-primitives cannot independently anchor thresholds)
 
 Flag as **ARTICLE-I-WARNING** if:
-- A comment names a primitive but gives no derivation (value is asserted, not derived)
+- A comment names P1 or P2 but gives no derivation (value asserted, not derived)
 
 ### Filter chain coherence
 
@@ -148,7 +160,7 @@ AMENDMENT-11-VIOLATIONS [N]  (scaffold modules — Stage 1 gate only)
 ──────────────────────────────────────────────────────
 
 [SEVERITY] [file:line] — [one-line description]
-  Domain primitive affected: [name from Amendment 1]
+  Domain primitive affected: [P1 — Received RF Power (dBm) | P2 — Demodulator SNR (dB) | both]
   What to fix: [specific change — do not rewrite, describe]
 
 [repeat for each finding]

@@ -34,7 +34,12 @@ Read in this order before producing any suggestion.
 
 1. `docs/device_context.md` — primary evidence source
    - Device Purpose: project target and pass/fail threshold
-   - Domain Primitives: Article I basis for every suggestion
+   - Domain Primitives (Amendment 1): Article I basis for every suggestion.
+     The two ratified primitives are:
+       P1 — Received RF Power (dBm): SX1276 RSSI register, measurable at antenna port
+       P2 — Demodulator SNR (dB): SX1276 packet status register
+     Non-primitive observables (cannot independently anchor thresholds):
+       link_margin, per, sf — diagnostic only
    - Signal Inventory: expected units, ranges, hard limits
    - BOM: components, values, part numbers
    - Circuit Notes: power topology, signal paths, known issues
@@ -117,7 +122,10 @@ operating environment from device_context.md.
 
 ## What you do NOT do
 
-- Suggest a change without tracing it to a specific test result (Article I)
+- Suggest a change without tracing it to a specific test result that reflects
+  a degradation in P1 (Received RF Power, dBm) or P2 (Demodulator SNR, dB)
+  (Article I / Amendment 1). A hardware suggestion grounded only in link_margin,
+  per, or sf without tracing through to P1 or P2 does not satisfy Article I.
 - Redesign the circuit from scratch — suggest targeted changes only
 - Approve your own suggestions (Article II)
 - Suggest unblocking a blocked toolchain without noting that it requires /judicial hear
