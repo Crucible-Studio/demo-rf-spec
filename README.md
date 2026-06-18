@@ -111,6 +111,63 @@ derives, you decide. The same interview that produced P1=RSSI/P2=SNR for this de
 produce different primitives for a bench RF diagnostic tool (P1=S11, P2=VSWR) — because
 deployment context, not intuition, determines what is measurable.
 
+Full walkthrough: [`docs/demo/demo_sop.md`](docs/demo/demo_sop.md)
+
+> **Before running `/spec collect` on a fresh demo:**
+> Strip the pre-loaded content so the session starts blank.
+>
+> ```bash
+> # Reset device context to blank template
+> cat > docs/device_context.md << 'EOF'
+> # Device Context
+>
+> This file is the primary evidence document for all agents operating under the
+> Crucible Constitutional Governance system.
+>
+> **Agents: read this file before any hearing argument or advisory session.**
+>
+> ---
+>
+> ## Device Purpose
+>
+> > [To be filled by /spec collect]
+>
+> ---
+>
+> ## Signal Inventory
+>
+> > [To be filled by /spec collect]
+>
+> ---
+>
+> ## Bill of Materials (BOM)
+>
+> > [To be filled after toolchain init]
+>
+> ---
+>
+> ## Test Results
+>
+> > [To be filled after Stage 0]
+>
+> ---
+>
+> ## Open Anomalies
+>
+> > [None yet]
+> EOF
+>
+> # Reset Amendment 1 to NOT YET RATIFIED
+> # Edit docs/governance/amendments.md and replace the Amendment 1 block with:
+> #   *Status: NOT YET RATIFIED*
+> #   (remove all P1/P2 content and the physical justification paragraph)
+> # Update the Amendment Index row to:
+> #   | 1 | Domain Primitives | NOT YET RATIFIED | Article I |
+> ```
+>
+> Do not skip the amendment reset — if Amendment 1 is already ratified when the buyer
+> opens the project, the ratification moment (the point of the demo) is gone.
+
 ---
 
 ## The Name
