@@ -30,7 +30,18 @@ Ask verbatim:
 
 > "What is the hardest physical environment this device has to work in?"
 
-Wait for full answer. Then ask Question 3.
+Wait for full answer. Then check: does the answer contain at least one concrete
+number, frequency, measurement, or physical quantity (e.g. "5 days/week",
+"−40°C", "30 dB attenuation", "8 km", "90% humidity")?
+
+- **Yes** → proceed to Question 3.
+- **No** → ask this follow-up verbatim, once only:
+
+  > "Can you put a number on that — how often, how severe, or how far?
+  > Anything concrete."
+
+  Wait for the answer, then proceed to Question 3 regardless of whether
+  a number was given.
 
 ---
 
@@ -45,16 +56,42 @@ Wait for full answer. Then proceed immediately — no more questions.
 
 ---
 
-### After Question 3 — extract primitives
+### After Question 3 — challenge derived metrics first
+
+Before extracting primitives, evaluate the number the human named in answer 3:
+
+- Is it **first-order** — readable directly from a sensor or instrument register
+  with no arithmetic on other measured values? → it is a primitive candidate
+- Is it **derived** — a ratio, difference, or computed score that depends on two
+  or more other quantities? → it is not a primitive
+
+**If the answer-3 number is derived**, say so explicitly before proceeding:
+
+> "That's a derived metric — it traces to [underlying quantity A] and
+> [underlying quantity B]. I'll use those as the primitives. [Derived metric]
+> is the pass/fail outcome, but [A] and [B] are what the firmware actually
+> measures."
+
+Then continue. Do not ask another question — identify the underlying primitives
+from the domain context and proceed.
+
+Examples of derived metrics that must be resolved this way:
+- Link margin (RSSI − sensitivity floor) → traces to RSSI
+- Hash integrity / packet error rate → traces to RSSI + SNR
+- SNR margin → traces to SNR
+- A computed score or index → traces to its input measurements
+
+---
+
+### Extract primitives
 
 Extract 2–3 domain primitives from all three answers. Rules:
 
 - A primitive is a **first-order physically measurable quantity** — something
   the device ultimately depends on that can be read from a sensor or instrument
   directly, with no arithmetic on other measured values
-- Every number the human named in answer 3 is a strong candidate
-- A quantity that is the difference or ratio of two other quantities is **derived**,
-  not primitive — note it traces to whichever primitive it is computed from
+- If the human named a derived metric in answer 3, use the underlying primitives,
+  not the derived metric itself
 - 2 primitives is usually correct; 3 if the device genuinely has two independent
   physical domains; never more than 3 for a first spec
 
@@ -72,7 +109,9 @@ the hardest scenario, and the failure mode with its real-world consequence.]
 
 **Project target:** [hardest scenario from answer 2, one sentence]
 
-**Pass/fail threshold:** [the number from answer 3 with its unit and limit]
+**Pass/fail threshold:** [the primitive measurements from the extracted P1/P2,
+with the value or limit. If the human named a derived metric, write:
+"[Derived metric] ≥ [limit] — traces to P1 ([primitive name]) and P2 ([primitive name])"]
 
 **Failure mode:** [from answer 1 — what goes wrong and for whom]
 ```
@@ -115,7 +154,7 @@ Do you ratify Amendment 1? (yes / no / revise)
 
 **yes:** Write the ratified amendment to `docs/governance/amendments.md` under
 `## Project-Specific Amendments`. Mark the Amendment Index row RATIFIED with
-today's date. Print:
+today's date. Print exactly:
 
 ```
 ══════════════════════════════════════════════════════════════
@@ -123,8 +162,14 @@ AMENDMENT 1 RATIFIED
 Primitives: [P1 name] · [P2 name] [· P3 if applicable]
 Written to docs/governance/amendments.md
 Every agent in this project reads these before acting.
+
+Next steps:
+  1. Run agent-updater — propagates these primitives to all 17 agents
+  2. /toolchain init  — registers your hardware and locks the toolchain
 ══════════════════════════════════════════════════════════════
 ```
+
+Print nothing else after this block.
 
 **revise:** Ask what to change. Apply the change and print the revised amendment.
 Ask for ratification again.

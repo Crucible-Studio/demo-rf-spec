@@ -9,34 +9,33 @@ in CONSTITUTION.md. The governing Articles are unconditional and cannot be amend
 
 ### Amendment 1 — Domain Primitives
 *Traces to: Article I (Signal First)*
-*Status: RATIFIED — 2026-06-17*
+*Status: RATIFIED 2026-06-18*
+*Project: Remote Farm Equipment Health Telemetry Node*
 
 Every threshold, sensitivity setting, and algorithm parameter in this
 project must cite one of these primitives. A constant that cannot be
 cited is an Article I violation.
 
   P1 — RSSI (dBm)
-       The power of the received LoRa signal measured directly at the
-       gateway radio chipset (SX127x/SX126x register read); no arithmetic
-       on other measured values. Whether the 8 km link closes under rain
-       traces entirely to RSSI exceeding the gateway's sensitivity floor.
+       The received signal power of the last packet, read directly from
+       the LoRa radio register — no arithmetic required. Degrades with
+       free-space path loss and rain attenuation over the 8 km link.
 
   P2 — SNR (dB)
-       Signal-to-Noise Ratio reported directly by the gateway LoRa
-       chipset per received packet. LoRa has a defined demodulation
-       floor per Spreading Factor (e.g., −20 dB at SF12); a packet is
-       recoverable only when SNR exceeds that floor. Rain increases
-       path loss, directly depressing SNR independent of RSSI.
+       The signal-to-noise ratio of the last received packet, read
+       directly from the LoRa radio register. Determines whether the
+       demodulator can recover the health hash at the base station.
 
 Physical justification:
-The 8 km pass/fail threshold is a link budget problem: the transmitted
-packet survives only when the gateway sees RSSI above its sensitivity
-floor AND SNR above the LoRa demodulation floor for the active Spreading
-Factor. Wet conditions (5 rain days/week) add Mie scattering attenuation
-at 868/915 MHz, compressing both quantities simultaneously. Any
-threshold, retry count, Spreading Factor selection, or TX power
-parameter in this firmware ultimately traces to keeping RSSI and SNR
-within recoverable bounds at 8 km range in rain.
+At 8 km in heavy rain (~5 days/week), two independent effects combine
+to threaten link reliability: rain attenuation reduces RSSI toward the
+sensitivity floor, and ambient noise raises the noise floor, compressing
+SNR. Both must stay above their demodulation-floor thresholds for the
+health hash packet to be decoded. RSSI and SNR are each read as a single
+register value from the radio — they are first-order and require no
+computed intermediaries. Together they constitute the complete physical
+evidence base for every firmware threshold and filter parameter in this
+project.
 
 ---
 
@@ -73,7 +72,7 @@ stop and wait for human direction before any further action.
 
 | # | Title | Status | Traces to |
 |---|-------|--------|-----------|
-| 1 | Domain Primitives | RATIFIED 2026-06-17 | Article I |
+| 1 | Domain Primitives | RATIFIED 2026-06-18 | Article I |
 | 2 | Stage Gate Order | PROPOSED | Article I + II |
 | 3 | Toolchain Alignment | PROPOSED | Article II |
 | 4 | Three-Strike Escalation Rule | PROPOSED | Article II |
